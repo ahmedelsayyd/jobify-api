@@ -61,7 +61,7 @@ const updateUser = async(req, res,next)=>{
 
     if(!user) throw new NotFoundError(`User with id ${userId} not Found`)
 
-    res.status(200).json({ user })
+    res.status(200).json(user)
 }
 
 module.exports = {
