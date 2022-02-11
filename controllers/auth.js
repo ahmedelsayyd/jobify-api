@@ -14,7 +14,7 @@ const register = async (req, res, next)=>{
             "firstName": createUser.name.firstName,
             "lastName": createUser.name.lastName,
         },
-        "fullName": user.fullName,
+        "fullName": createUser.fullName,
         "country": createUser.country,
         "email": createUser.email
     }
