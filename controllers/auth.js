@@ -6,9 +6,19 @@ const { BadRequestError, UnauthenticatedError, NotFoundError } = require('../err
 
 const register = async (req, res, next)=>{
 
-    const user = await User.create({...req.body})
-    const  token = await user.generateToken()
-    res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token })
+    const createUser = await User.create({...req.body})
+    const  token = await createUser.generateToken()
+
+    const user={
+        "name": {
+            "firstName": createUser.name.firstName,
+            "lastName": createUser.name.lastName,
+        },
+        "country": createUser.country,
+        "email": createUser.email
+    }
+
+    res.status(StatusCodes.CREATED).json({ user, token })
 
 }
 
@@ -28,7 +38,17 @@ const login = async (req, res, next)=>{
     if (!isPasswordCorrect) throw new UnauthenticatedError('Invalid Credentials')
 
     const token = user.generateToken()
-    res.status(StatusCodes.OK).json({user, token })
+    res.status(StatusCodes.OK).json({
+        user: {
+            "name": {
+                "firstName": user.name.firstName,
+                "lastName": user.name.lastName,
+            },
+            "fullName": user.fullName,
+            "country": user.country,
+            "email": user.email
+        }, 
+        token })
 }
 
 

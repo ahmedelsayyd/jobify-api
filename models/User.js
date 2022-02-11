@@ -40,6 +40,9 @@ const UserSchema = new mongoos.Schema({
     }
 })
 
+UserSchema.virtual('fullName').get(function(){
+    return `${this.name.firstName} ${this.name.lastName}`
+})
 
 UserSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt(10)
