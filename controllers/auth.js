@@ -11,6 +11,7 @@ const register = async (req, res, next)=>{
 
     const user={
         "name": {
+            "id": user.id,
             "firstName": createUser.name.firstName,
             "lastName": createUser.name.lastName,
         },
@@ -41,6 +42,7 @@ const login = async (req, res, next)=>{
     const token = user.generateToken()
     res.status(StatusCodes.OK).json({
         user: {
+            "id": user.id,
             "name": {
                 "firstName": user.name.firstName,
                 "lastName": user.name.lastName,
@@ -54,7 +56,7 @@ const login = async (req, res, next)=>{
 
 
 const updateUser = async(req, res,next)=>{
-    const {id: userId} = req.user;
+    const {id: userId} = req.params;
     const user = await User.findOneAndUpdate(userId, req.body, {new: true, runValidators: true}).select('-password')
 
     if(!user) throw new NotFoundError(`User with id ${userId} not Found`)

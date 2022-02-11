@@ -8,7 +8,7 @@ const {login, register, updateUser} = require('../controllers/auth')
 
 router.post('/register', checkValidaty([body('email').isEmail()]) ,register)
 router.post('/login', login)
-router.patch('/user', updateUser)
+router.patch('/user/:id', updateUser)
 
 
 module.exports = router
